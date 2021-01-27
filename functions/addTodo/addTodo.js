@@ -17,14 +17,15 @@ const typeDefs = gql`
     title: String!
   }
 `;
-var client = new faunadb.Client({
-  secret: process.env.FAUNA_DB_KEY,
-});
+
 
 const resolvers = {
   Query: {
     allTodos: async (parent, args, context) => {
       try {
+        var client = new faunadb.Client({
+          secret: process.env.FAUNA_DB_KEY,
+        });
         let result = await client.query(
           q.Map(
             q.Paginate(q.Documents(q.Collection("Todos"))),
@@ -47,6 +48,9 @@ const resolvers = {
     addTodoTask: async (e, { title }) => {
       console.log("Title====>", title);
       try {
+        var client = new faunadb.Client({
+          secret: process.env.FAUNA_DB_KEY,
+        });
         const result = await client.query(
           q.Create(q.Collection("Todos"), {
             data: { title: title },
@@ -62,6 +66,9 @@ const resolvers = {
     deleteTodoTask: async (e, { id }) => {
       console.log("Item Tobe Deleted ===>", id);
       try {
+        var client = new faunadb.Client({
+          secret: process.env.FAUNA_DB_KEY,
+        });
         const result = await client.query(
           q.Delete(q.Ref(q.Collection("Todos"), id))
         );
@@ -74,6 +81,9 @@ const resolvers = {
     updateTodoTask: async (_, { id, title }) => {
       console.log("Item Tobe Updated ===>", title, id);
       try {
+        var client = new faunadb.Client({
+          secret: process.env.FAUNA_DB_KEY,
+        });
         const result = await client.query(
           q.Update(q.Ref(q.Collection("Todos"), id), {
             data: { title: title },

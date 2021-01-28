@@ -18,7 +18,6 @@ const typeDefs = gql`
   }
 `;
 
-
 const resolvers = {
   Query: {
     allTodos: async (parent, args, context) => {
